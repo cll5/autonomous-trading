@@ -1,4 +1,4 @@
-from cryptocurrency.utils import csv
+from cryptocurrency.utils import csvHelpers
 from datetime import datetime, timedelta
 import time
 from urllib import request, parse
@@ -13,7 +13,7 @@ ONE_YEAR_PERIOD = timedelta(weeks = 52)
 
 def getAllTradeHistory(filename = 'tradeHistory.csv', currencyPair = 'BTC_NXT'):
     fieldnames = ['date', 'tradeID', 'globalTradeID', 'type', 'rate', 'amount', 'total']
-    (csvfile, csvwriter) = csv.create(filename, fieldnames)
+    (csvfile, csvwriter) = csvHelpers.createNewCSV(filename, fieldnames)
 
     totalTransactions = 0
     numberOfTransactionSaved = 0

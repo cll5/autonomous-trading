@@ -1,4 +1,4 @@
-from cryptocurrency.utils import csv
+from cryptocurrency.utils import csvHelpers
 from datetime import datetime, timedelta
 import time
 from urllib import request, parse
@@ -25,7 +25,7 @@ def getAllChartData(filename = 'chartData_5mins.csv', currencyPair = 'BTC_NXT', 
         else:
             fieldnames.append(fieldname)
 
-    (csvfile, csvwriter) = csv.create(filename, fieldnames)
+    (csvfile, csvwriter) = csvHelpers.createNewCSV(filename, fieldnames)
 
     print('Fetching all chart data ({0} seconds interval) ... '.format(period), end = '', flush = True)
     while (startDate > 0):

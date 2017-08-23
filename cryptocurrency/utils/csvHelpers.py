@@ -1,7 +1,7 @@
 import csv
 
 # creates a csv tuple of (csv file identifier, csv writer)
-def create(filename, fieldnames = []):
+def createNewCSV(filename, fieldnames = []):
     if (not filename.lower().endswith('.csv')):
         filename += '.csv'
 
