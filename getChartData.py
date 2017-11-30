@@ -27,7 +27,7 @@ def getAllChartData(filename = 'chartData_5mins.csv', currencyPair = 'BTC_NXT', 
 
     (csvfile, csvwriter) = csvHelpers.createNewCSV(filename, fieldnames)
 
-    print('Fetching all chart data ({0} seconds interval) ... '.format(period), end = '', flush = True)
+    print('Saving {0} chart data ({1} seconds interval) ... '.format(currencyPair, period), end = '', flush = True)
     while (startDate > 0):
         chartData = getChartDataFrom(start = startDateString, currencyPair = currencyPair, period = period)
 
@@ -55,7 +55,7 @@ def getAllChartData(filename = 'chartData_5mins.csv', currencyPair = 'BTC_NXT', 
         startDateString = datetime.utcfromtimestamp(date).strftime(dateFormat)
 
         # Wait a bit to stay within the API call restrictions
-        time.sleep(0.25)
+        time.sleep(0.2)
 
     csvfile.close()
     print('complete!')
@@ -107,10 +107,24 @@ def quitProgram(signal, frame):
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, quitProgram)
 
-    coinPair = 'BTC_NXT'
-    getAllChartData('chartData_5mins.csv', coinPair, 300)
-    getAllChartData('chartData_15mins.csv', coinPair, 900)
-    getAllChartData('chartData_30mins.csv', coinPair, 1800)
-    getAllChartData('chartData_2hrs.csv', coinPair, 7200)
-    getAllChartData('chartData_4hrs.csv', coinPair, 14400)
-    getAllChartData('chartData_1day.csv', coinPair, 86400)
+    currencyPairs = [
+        'USDT_BTC',
+        'USDT_DASH',
+        'USDT_LTC',
+        'USDT_NXT',
+        'USDT_STR',
+        'USDT_XMR',
+        'USDT_XRP'
+    ]
+
+    periods = {
+        '15m': 900,
+        '30m': 1800,
+        '02h': 7200
+    }
+
+    # get all the chart data for the given (currency pairs, periods)
+    for currencyPair in currencyPairs:
+        for periodName, period in periods.items():
+            filename = 'chartData-{0}-{1}_interval.csv'.format(currencyPair, periodName)
+            getAllChartData(filename, currencyPair, period)
